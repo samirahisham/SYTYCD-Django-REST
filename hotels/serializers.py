@@ -3,6 +3,8 @@ from datetime import datetime
 from rest_framework import serializers
 
 from .models import Hotel, Booking
+from django.contrib.auth.models import User
+
 
 
 class HotelsListSerializer(serializers.ModelSerializer):
