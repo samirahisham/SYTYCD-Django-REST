@@ -20,6 +20,7 @@ from django.urls import path
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
+
 )
 
 from hotels import views
@@ -28,7 +29,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('hotels/list/', views.HotelsList.as_view(), name="hotels-list"),
-    path('hotels/details/<int:hotel_id>/', views.HotelDetails, name="hotel-details"),
+    path('hotels/details/<int:hotel_id>/', views.HotelDetails.as_view(), name="hotel-detail"),
     path('hotels/book/<int:hotel_id>/', views.BookHotel.as_view(), name="book-hotel"),
 
     path('bookings/', views.BookingsList.as_view(), name="bookings-list"),
@@ -37,6 +38,6 @@ urlpatterns = [
 
     path('profile/', views.Profile.as_view(), name="profile"),
 
-    path('login/', TokenObtainPairView, name="login"),
+    path('login/', TokenObtainPairView.as_view(), name="login"),
     path('register/',  views.Register.as_view() , name="register"),
 ]
