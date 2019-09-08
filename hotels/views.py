@@ -29,7 +29,7 @@ class BookingsList(ListAPIView):
 
 	def get_queryset(self):
 		today = datetime.today()
-		return Booking.objects.get(user=self.request.user, check_in__gte=today)
+		return Booking.objects.filter(user=self.request.user, check_in__gte=today)
 
 
 class BookHotel(CreateAPIView):
@@ -51,7 +51,7 @@ class ModifyBooking(RetrieveUpdateAPIView):
 class CancelBooking(DestroyAPIView):
 	queryset = Booking.objects.all()
 	lookup_field = 'id'
-	lookup_url_kwarg = 'bookig_id'
+	lookup_url_kwarg = 'booking_id'
 	permission_classes = [IsBookedByUser, IsNotInPast]
 
 
@@ -65,6 +65,7 @@ class Profile(RetrieveAPIView):
 
 class Register(CreateAPIView):
     serializer_class = UserCreateSerializer
+
 
 
 

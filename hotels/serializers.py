@@ -49,7 +49,7 @@ class BookingDetailsSerializer(serializers.ModelSerializer):
 		)
 	class Meta:
 		model = Booking
-		fields = ["hotel", "check_in", 'number_of_nights', 'modify']
+		fields = ["hotel", "check_in", 'number_of_nights', 'modify','cancel']
 
 
 class PastBookingDetailsSerializer(serializers.ModelSerializer):
@@ -66,13 +66,13 @@ class UserSerializer(serializers.ModelSerializer):
 		model = User
 		fields = ["username", "name", "email", "past_bookings"]
 
-	def name(self, obj):
+	def get_name(self, obj):
 		return "%s %s"%(obj.first_name, obj.last_name)
 
 	def get_past_bookings(self, obj):
 		today = datetime.today()
 		bookings = obj.bookings.filter(check_in__lt=today)
-		return PastBookingDetailsSerializer(bookings).data
+		return PastBookingDetailsSerializer(bookings,many=True).data
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
